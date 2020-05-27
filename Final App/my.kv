@@ -1,0 +1,98 @@
+<BackgroundColor@Widget>
+    background_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+WindowManager:
+    IntroWindow:
+    MainWindow:
+
+
+<IntroWindow>:
+    name: "Intro"
+    orientation: 'vertical'
+    FloatLayout:
+        Label:
+            id: intro_label
+            pos_hint: {"center_x": 0.5, "top": 0.8}
+            size_hint: 0.5, 0.2
+            halign: 'center'
+            text: "Chooser"
+            font_name: "Pacifico"
+            color: 0, 0, 0, 1
+            font_size: 60
+        Label:
+            id: intro_label2
+            pos_hint: {"center_x": 0.5, "top": 0.65}
+            size_hint: 0.5, 0.2
+            halign: 'center'
+            text: "A simple decision making app!"
+            color: 0, 0, 0, 1
+            font_size: 14
+        Label:
+            id: intro_label2
+            pos_hint: {"center_x": 0.5, "top": 0.45}
+            size_hint: 0.5, 0.2
+            halign: 'center'
+            text: "Created by: Jake Li"
+            color: 0, 0, 0, 1
+            font_size: 14
+        Button:
+            id: app_btn
+            pos_hint: {"center_x": 0.5, "top": 0.3}
+            size_hint: 0.4, 0.10
+            text: "Enter App"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "left"
+
+<MainWindow>:
+    name: "main"
+    itemList: itemList
+    FloatLayout:
+        Label:
+            pos_hint: {"center_x": 0.5, "top": 0.95}
+            size_hint: 0.25, 0.2
+            text: "Enter Items:"
+            color: 0, 0, 0, 1
+            halign: 'center'
+        TextInput:
+            id: itemList
+            pos_hint: {"center_x": 0.5, "top": 0.8}
+            size_hint: 0.7, 0.5
+            text: ""
+            hint_text: "(Comma Separated)\n\nFor Example: \nItem #1, Item #2, Item #3, etc. "
+        Button:
+            pos_hint: {"center_x": 0.5, "top": 0.25}
+            size_hint: 0.4, 0.125
+            text: "Choose One"
+            font_name: "Pacifico"
+            on_press:root.choose()
+
+<ChoosePopup>:
+    title: "The Chosen One"
+    title_size: 18
+    title_align: 'center'
+    title_font: "Pacifico"
+    separator_color: 1, 1, 1, 1
+    size_hint: .75,.65
+    auto_dismiss: False
+    id: select
+
+    GridLayout:
+        cols: 1
+        Label:
+            id: chosen_one
+            text: select.chosen_item
+        Button:
+            size_hint_y: .4
+            text: "Choose Again!"
+            font_name: "Pacifico"
+            font_size: 16
+            on_press:
+                root.dismiss()
+
